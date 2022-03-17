@@ -1,0 +1,55 @@
+.clock {
+  font-size: 50px;
+  font-weight: bold;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+p {
+  font-size: 14px;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.dawn {
+  background-color: #5995b7;
+  color: #ffffff;
+}
+
+.morning {
+  background-color: #76ccf1;
+  color: #031e58;
+}
+
+.late-morning {
+  background-color: #b8e4d7;
+  color: #031e58;
+}
+
+.lunch {
+  background-color: #fafbbd;
+  color: #031e58;
+}
+
+.afternoon {
+  background-color: #fde050;
+  color: #031e58;
+}
+
+.late-afternoon {
+  background-color: #f1b351;
+  color: #031e58;
+}
+
+.sunset {
+  background-color: #804d7a;
+  color: #ffffff;
+}
+
+.evening {
+  background-color: #0c3b78;
+  color: #ffffff;
+}
+
+.night {
+  background-color: #052042;
+  color: #ffffff;
+}
