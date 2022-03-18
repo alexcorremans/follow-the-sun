@@ -1,34 +1,34 @@
 // set data
 const timeZones = {
   0: {
-    timezone: "America/Los_Angeles",
-    name: "West Coast",
-    team: "Emma, Nick, Sri"
+    timezone: "America/Los_Angeles", // tz database name - https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    name: "West Coast", // display name for this timezone
+    team: "Jane, John" // team members working in this timezone
   },
   1: {
     timezone: "America/New_York",
     name: "East Coast",
-    team: "Jeff, Dan, Rich, Scott"
+    team: "The team on the East Coast"
   },
   2: {
     timezone: "Europe/London",
     name: "London",
-    team: "Lewis"
+    team: "Someone in the UK"
   },
   3: {
     timezone: "Europe/Berlin",
     name: "Berlin",
-    team: "Michal"
+    team: "Two people in Berlin"
   },
   4: {
     timezone: "Asia/Dubai",
     name: "Dubai",
-    team: "Garima"
+    team: "Someone in Dubai"
   },
   5: {
     timezone: "Australia/Sydney",
     name: "Sydney",
-    team: "Alex"
+    team: "The team in Sydney"
   }
 }
 
