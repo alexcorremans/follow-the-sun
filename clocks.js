@@ -64,21 +64,59 @@ function getClass(hour) {
     }
 }
 
-function displayClock(timezone, name, team, i) {
-  let dt = generateDT(timezone);
-  document.getElementById(`time-${i}`).innerHTML = dt.toLocaleString(DateTime.TIME_SIMPLE);
-  document.getElementById(`date-${i}`).innerHTML = dt.toLocaleString({ weekday: 'short', month: 'long', day: 'numeric' });
-  document.getElementById(`zone-name-${i}`).innerHTML = name;
-  document.getElementById(`offset-${i}`).innerHTML = dt.offsetNameShort;
-  document.getElementById(`team-${i}`).innerHTML = team;
+function generateHTML(i, name, team) {
+  const outerDiv = document.createElement('div');
+  outerDiv.classList.add("col-sm", "text-center", "d-flex", "flex-column", "justify-content-between");
+
+  const topRow = document.createElement('div');
+  topRow.classList.add("row");
+  outerDiv.appendChild(topRow);
+  
+  const middleRow = document.createElement('div');
+  middleRow.classList.add("row", "mt-3", "mt-sm-0");
+  
+  const clock = document.createElement('h1');
+  clock.classList.add("clock");
+  clock.id = `time-${i}`
+  middleRow.appendChild(clock);
+
+  const date = document.createElement('p');
+  date.id = `date-${i}`
+  middleRow.appendChild(date);
+  outerDiv.appendChild(middleRow);
+
+  const bottomRow = document.createElement('div');
+  bottomRow.classList.add("row", "mb-1", "mb-sm-4");
+  const bottomRowHTML = `
+    <p><span>${name}</span> (<span id="offset-${i}"></span>)
+      <br><span>${team}</span>
+    </p>
+  `;
+  bottomRow.innerHTML = bottomRowHTML;
+  outerDiv.appendChild(bottomRow);
+
+  const main = document.querySelector('main');
+  main.appendChild(outerDiv);
+}
+
+function displayClock(i, timezone) {
+  const dt = generateDT(timezone);
+  document.getElementById(`time-${i}`).textContent = dt.toLocaleString(DateTime.TIME_SIMPLE);
+  document.getElementById(`date-${i}`).textContent = dt.toLocaleString({ weekday: 'short', month: 'long', day: 'numeric' });
+  document.getElementById(`offset-${i}`).textContent = dt.offsetNameShort;
   document.getElementById(`time-${i}`).parentElement.parentElement.classList.remove(getClass(dt.hour - 2));
   document.getElementById(`time-${i}`).parentElement.parentElement.classList.add(getClass(dt.hour));
 }
 
-// main function, runs every second - iterates over timeZones object
+// main function, runs every second
 function displayClocks() {
     for (var i = 0; i < numberOfTimezones; ++i) {
-      displayClock(timeZones[i].timezone, timeZones[i].name, timeZones[i].team, i)
+      // first time it runs, create HTML structure
+      if (document.querySelector('main').childElementCount < numberOfTimezones) {
+        generateHTML(i, timeZones[i].name, timeZones[i].team);
+      }
+      // display dynamic data
+      displayClock(i, timeZones[i].timezone)
     }
 }
 
