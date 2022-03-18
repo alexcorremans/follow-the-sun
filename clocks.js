@@ -1,5 +1,43 @@
+// set data
+const timeZones = {
+  0: {
+    timezone: "America/Los_Angeles",
+    name: "West Coast",
+    team: "Emma, Nick, Sri"
+  },
+  1: {
+    timezone: "America/New_York",
+    name: "East Coast",
+    team: "Jeff, Dan, Rich, Scott"
+  },
+  2: {
+    timezone: "Europe/London",
+    name: "London",
+    team: "Lewis"
+  },
+  3: {
+    timezone: "Europe/Berlin",
+    name: "Berlin",
+    team: "Michal"
+  },
+  4: {
+    timezone: "Asia/Dubai",
+    name: "Dubai",
+    team: "Garima"
+  },
+  5: {
+    timezone: "Australia/Sydney",
+    name: "Sydney",
+    team: "Alex"
+  }
+}
+
+const numberOfTimezones = Object.keys(timeZones).length;
+
+// import luxon
 var DateTime = luxon.DateTime;
 
+// helpers
 function generateDT(tzString) {
     return DateTime.now().setLocale('en-GB').setZone(tzString);
 }
@@ -26,48 +64,22 @@ function getClass(hour) {
     }
 }
 
+function displayClock(timezone, name, team, i) {
+  let dt = generateDT(timezone);
+  document.getElementById(`time-${i}`).innerHTML = dt.toLocaleString(DateTime.TIME_SIMPLE);
+  document.getElementById(`date-${i}`).innerHTML = dt.toLocaleString({ weekday: 'short', month: 'long', day: 'numeric' });
+  document.getElementById(`zone-name-${i}`).innerHTML = name;
+  document.getElementById(`offset-${i}`).innerHTML = dt.offsetNameShort;
+  document.getElementById(`team-${i}`).innerHTML = team;
+  document.getElementById(`time-${i}`).parentElement.parentElement.classList.remove(getClass(dt.hour - 2));
+  document.getElementById(`time-${i}`).parentElement.parentElement.classList.add(getClass(dt.hour));
+}
+
+// main function, runs every second - iterates over timeZones object
 function displayClocks() {
-    const pst = generateDT("America/Los_Angeles");
-    document.getElementById("date-0").innerHTML = pst.toLocaleString({ weekday: 'short', month: 'long', day: 'numeric' });
-    document.getElementById("time-0").innerHTML = pst.toLocaleString(DateTime.TIME_SIMPLE);
-    document.getElementById("offset-0").innerHTML = pst.offsetNameShort;
-    document.getElementById("time-0").parentElement.parentElement.classList.remove(getClass(pst.hour - 2));
-    document.getElementById("time-0").parentElement.parentElement.classList.add(getClass(pst.hour));
-
-    const est = generateDT("America/New_York");
-    document.getElementById("date-1").innerHTML = est.toLocaleString({ weekday: 'short', month: 'long', day: 'numeric' });
-    document.getElementById("time-1").innerHTML = est.toLocaleString(DateTime.TIME_SIMPLE);
-    document.getElementById("offset-1").innerHTML = est.offsetNameShort;
-    document.getElementById("time-1").parentElement.parentElement.classList.remove(getClass(est.hour - 2));
-    document.getElementById("time-1").parentElement.parentElement.classList.add(getClass(est.hour));
-
-    const uk = generateDT("Europe/London");
-    document.getElementById("date-2").innerHTML = uk.toLocaleString({ weekday: 'short', month: 'long', day: 'numeric' });
-    document.getElementById("time-2").innerHTML = uk.toLocaleString(DateTime.TIME_SIMPLE);
-    document.getElementById("offset-2").innerHTML = uk.offsetNameShort;
-    document.getElementById("time-2").parentElement.parentElement.classList.remove(getClass(uk.hour - 2));
-    document.getElementById("time-2").parentElement.parentElement.classList.add(getClass(uk.hour));
-
-    const eur = generateDT("Europe/Berlin");
-    document.getElementById("date-3").innerHTML = eur.toLocaleString({ weekday: 'short', month: 'long', day: 'numeric' });
-    document.getElementById("time-3").innerHTML = eur.toLocaleString(DateTime.TIME_SIMPLE);
-    document.getElementById("offset-3").innerHTML = eur.offsetNameShort;
-    document.getElementById("time-3").parentElement.parentElement.classList.remove(getClass(eur.hour - 2));
-    document.getElementById("time-3").parentElement.parentElement.classList.add(getClass(eur.hour));
-
-    const dub = generateDT("Asia/Dubai");
-    document.getElementById("date-4").innerHTML = dub.toLocaleString({ weekday: 'short', month: 'long', day: 'numeric' });
-    document.getElementById("time-4").innerHTML = dub.toLocaleString(DateTime.TIME_SIMPLE);
-    document.getElementById("offset-4").innerHTML = dub.offsetNameShort;
-    document.getElementById("time-4").parentElement.parentElement.classList.remove(getClass(dub.hour - 2));
-    document.getElementById("time-4").parentElement.parentElement.classList.add(getClass(dub.hour));
-
-    const syd = generateDT("Australia/Sydney");
-    document.getElementById("date-5").innerHTML = syd.toLocaleString({ weekday: 'short', month: 'long', day: 'numeric' });
-    document.getElementById("time-5").innerHTML = syd.toLocaleString(DateTime.TIME_SIMPLE);
-    document.getElementById("offset-5").innerHTML = syd.offsetNameShort;
-    document.getElementById("time-5").parentElement.parentElement.classList.remove(getClass(syd.hour - 2));
-    document.getElementById("time-5").parentElement.parentElement.classList.add(getClass(syd.hour));
+    for (var i = 0; i < numberOfTimezones; ++i) {
+      displayClock(timeZones[i].timezone, timeZones[i].name, timeZones[i].team, i)
+    }
 }
 
 window.onload = displayClocks();
