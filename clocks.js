@@ -88,7 +88,8 @@ function generateHTML(i, name, team) {
   const bottomRow = document.createElement('div');
   bottomRow.classList.add("row", "mb-1", "mb-sm-4");
   const bottomRowHTML = `
-    <p><span>${name}</span> (<span id="offset-${i}"></span>)
+    <p><span>${name}</span>
+      <br><span id="offset-${i}"></span>
       <br><span>${team}</span>
     </p>
   `;
